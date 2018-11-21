@@ -107,3 +107,78 @@ considering this in a 128 dimensional space, we can say that the closer two vect
 other in space, the more likely it is that the vectors represent two images of the same person. For
 the direct comparison method, we compared each test face individually with our training set of
 10 images.
+<img src = "https://raw.githubusercontent.com/Horbaje/Spring18_Project/master/SP_Comparison.png">
+This worked because our training set wasn’t too large. But this method is not scalable. Imagine
+10,000 images of which we have to compare each one with 20 faces of our training set. This
+would take quite long and even longer if we would add images subsequently. Another limitation
+to this method is that there is no mechanism for handling cases where an encoding matches two
+or more known people. We could build a function for this; for example, we could write in a stop
+condition for when it reaches a match, but then that leaves open the possibility of unnecessary
+bad matches. To solve this more elegantly, we could employed a k-nearest neighbors algorithm,
+bringing us to our next testing method. The direct comparison model achieved an accuracy of
+61.76%.
+## k-Nearest Neighbors
+K-nearest neighbors (k-nn) is the natural evolution of direct comparison, as we can
+compare against the entire encoding space at once. K-nn is a classification algorithm, which
+belongs to the family of supervised learning algorithms. “ Informally, this means that we are
+given a labelled dataset consisting of training observations (x, y) and would like to capture the
+relationship between x and y. More formally, our goal is to learn a function h:X→Y so that given
+an unseen observation x, h(x) can confidently predict the corresponding output y (Zakka, 2016).”
+Our labeled dataset is again the training dataset containing the labelled images from Google
+Images. We have two images each celebrity plus the label corresponding to that class. The idea
+is the following, we first loop through all celebrities in the training set and encode each one.
+Then we determine how many k- nearest neighbours to use. We determined the number of k-nn
+by taking the square root of the number of encodings. Generally, the number of k-nn is open to
+experimentation and depends on the nature of the problem. We then trained the k-nn algorithm.
+During training, we group the most similar encodings. Once the training is done, the trained
+classifier is returned on which we made predictions. When we apply the trained classifier to our
+test data, faces (encodings) are assigned to clusters. The assignment is done through a sort of
+majority voting, taking the distance between points and hence determining similarity.
+<img src = "https://raw.githubusercontent.com/Horbaje/Spring18_Project/master/SP_kNN.png">
+
+In order to achieve a higher accuracy, here it makes sense to implement a threshold. The lower
+the threshold (or distance amongst datapoints), the closer the encoding of a face has to be to a
+group, otherwise it will be discarded as “not the same person”. For faces of unrecognized
+persons, we returned the name 'unknown'. If an image does not contain any faces, an empty
+result will be returned. Finally, we return our prediction, removing the classes that could not be
+assigned. The K-Nearest Neighbors algorithm achieved an accuracy of 77.67%. For our
+implementation, we used the sklearn neighbors library.
+## Neural Networks
+Our last approach is to use neural networks. Neural Networks are roughly modeled after
+how a brain functions, using individual nodes as signal processors. Each neuron can be excited
+through a sort of action potential. Much simplified, we feed some input into our NN architecture,
+the NN breaks up all features and we receive as output our classification. Neural Networks are
+much more flexible than either k-nearest neighbors or direct comparison, because we are able to
+assess each feature separately and improve our model by running multiple iterations to minimize
+the loss. We used TensorFlow in our implementation for simplicity and breadth of Python
+support. We chose not to include any hidden layers, because while they would have been helpful
+in drilling down to the encoding level, we didn’t find it necessary as our encodings had already
+been extracted via the face_recognition package. The face_recognition package itself is based on
+a deeplearning algorithm. Additionally, the number of input classes does not exceed four (one for
+each celebrity), meaning that there will no more hidden layers be required in order to address our
+problem sufficiently.
+<img src = "https://raw.githubusercontent.com/Horbaje/Spring18_Project/master/SP_NN.png">
+After deciding on the architecture of our Neural Network, we have to decide on which activation
+function to use, what learning rate, batch size, optimizer and training epochs. For most
+parameters, there is no clear recipe. Rather, we try different ones and assess their performance on
+our problem. We decided on a learning rate of 0.1, which is a standard learning rate for these
+type of problems. We set the training epochs to 100. The batch size of the algorithm is 128- 128
+respectively for 128 pixels.
+As activation function, we used the softmax function and for the optimization we used the Adam
+optimizer. The softmax is a “ generalization of the logistic function that "squashes" a K-dimensional vector
+of arbitrary real values to a K-dimensional vector of real values, where each entry is in the range
+(0, 1), and all the entries add up to 1”(Wikipedia, 2018). The benefit of applying the softmax are
+that all values range from 0 to 1, as it is a more efficient extension of Stochastic Gradient
+Descent and that it facilitates working with probabilities. In conclusion, The NN was the best
+model and achieved an accuracy of 90.20%.
+<img src = "https://raw.githubusercontent.com/Horbaje/Spring18_Project/master/SP_NN2.png">
+## Results
+All in all, the deep learning approach is most successful when building a model for face
+recognition. Followed by K-Nearest- Neighbor and then comparison. The accuracy rates for each
+approach are summarized in the following tables:
+<b>Using Both Historic Film Data for Test and Training</b>
+| Classifier/ Model | Accuracy |
+| --- | --- |
+| Comparison | 61.76% |
+| K-NN | 77.67% |
+| Neural Network | 90.20% |
