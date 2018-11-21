@@ -175,10 +175,11 @@ model and achieved an accuracy of 90.20%.
 ## Results
 All in all, the deep learning approach is most successful when building a model for face
 recognition. Followed by K-Nearest- Neighbor and then comparison. The accuracy rates for each
-approach are summarized in the following tables:
+approach are summarized in the following tables:<p>
 <b>Using Both Historic Film Data for Test and Training</b>
+  
 | Classifier/ Model | Accuracy |
-| --- | --- |
-| Comparison | 61.76% |
-| K-NN | 77.67% |
-| Neural Network | 90.20% |
+| ----------------- | -------- |
+| Comparison        |  61.76%  |
+| K-NN              |  77.67%  |
+| Neural Network    |  90.20%  |
