@@ -183,3 +183,46 @@ approach are summarized in the following tables:<p>
 | Comparison        |  61.76%  |
 | K-NN              |  77.67%  |
 | Neural Network    |  90.20%  |
+<p>
+<b>Using Google Images for Training Data and Historic Images as Test Data</b>
+| Classifier/ Model | Accuracy |
+| ----------------- | -------- |
+| Comparison        |  32.4%   |
+| K-NN              |  74.8%   |
+| Neural Network    |  59.8%   |
+
+### Recall Rate
+Accuracy rates by themselves often do not give enough insight or can even be the wrong
+measure of performance. Therefore, we also take a look at sensitivity. Sensitivity is the
+proportion of actual positives that are correctly identified as such. It is calculated by dividing the
+true positives by the true positives plus the false positives.<br>
+We achieved a recall rate of 1 with the Google Images in direct comparison.
+
+# Challenges and Further Research
+The quality of historic and generally old film can be a challenge. Besides that they are in
+black and white, the films tend to be blurry. Furthermore, people depicted in old films are filmed
+from a rather long distance (in comparison to today’s capturing). This causes faces to be rather
+small and hinders the face encoding to perform properly. Quantifying the later is a topic that
+should be investigated. Another challenge that we encountered in our project work is that
+people’s faces are often shown from the side or from an not straight-forward angle. This again,
+will cause the face encoder to struggle. For future work, we suggest adding a greater pool of test
+images. Also those, which show the depicted persons from several different angles.
+Emotions and face expression as well as individuals wearing sunglasses and hats can cause
+distortion. In some of our historic films, Elizabeth's face was covered by her hat many times.
+We do have indications that this lowered our success rate of detecting a face. Further
+investigation in this direction should be pursued in order to improve results.
+Another topic that should be explored in this context is on how to optimize video frame
+processing for faster computation. It takes extremely much processing power to built a model for
+an potential increasing number of celebrities. Then, applying this model to test videos and
+generating a visual output again requires much computation work. Training should be done with
+multiple views of the face. Not just straight from the front. Experiment with adding “unknown”
+classified images to the training set.
+At this point, our model is good at identifying the people that it was trained for. However, it
+would be nice to make it more generalized.
+# Conclusion
+Working with deep neural networks is interesting and it is surprising how well they work.
+Especially if we compare them to other models. Neural Networks become even more powerful
+when sequenced. Yet a task such as identifying celebrities in video is quite complex. As humans
+we are relatively confident in our predictions, however our model is not very good at making
+abstractions. It’s very specialized. This project helped us to get a deeper understanding not just
+of neural networks, but also face recognition, its challenges and video processing.
